@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ShirtModal from "./ShirtModal";
 
 const shirts = [
   {
@@ -32,6 +33,10 @@ const shirts = [
 ];
 
 const ShirtGrid = () => {
+  const [selectedShirt, setSelectedShirt] = useState<(typeof shirts)[0] | null>(
+    null
+  );
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -39,6 +44,7 @@ const ShirtGrid = () => {
           <div
             key={index}
             className="relative group cursor-pointer"
+            onClick={() => setSelectedShirt(shirt)}
             style={{
               animationDelay: `${index * 0.2}s`,
             }}
@@ -53,6 +59,13 @@ const ShirtGrid = () => {
           </div>
         ))}
       </div>
+      {selectedShirt && (
+        <ShirtModal
+          isOpen={!!selectedShirt}
+          onClose={() => setSelectedShirt(null)}
+          shirt={selectedShirt}
+        />
+      )}
     </div>
   );
 };
