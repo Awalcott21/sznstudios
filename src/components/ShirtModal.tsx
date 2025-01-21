@@ -21,6 +21,7 @@ interface ShirtModalProps {
   shirt: {
     src: string;
     alt: string;
+    description: string;
   };
 }
 
@@ -39,16 +40,17 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] w-full">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-6">
+          <div className="grid gap-4">
             <img
               src={shirt.src}
               alt={shirt.alt}
               className="w-full h-auto rounded-lg"
             />
+            <p className="text-sm text-gray-600">{shirt.description}</p>
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium">Select Size</label>
