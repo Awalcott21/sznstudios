@@ -61,41 +61,24 @@ const CustomerDetailsModal = ({
     setFormSubmitted(true);
   };
 
-  const createOrder = () => {
-    return fetch("/api/create-paypal-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product: {
-          description: `${shirtDetails.alt} - Size: ${shirtDetails.size}`,
-          cost: "60.00"
-        },
-        customer: form.getValues()
-      }),
-    })
-    .then((response) => response.json())
-    .then((order) => order.id);
+  const createOrder = (data: any, actions: any) => {
+    return actions.order.create({
+      purchase_units: [{
+        description: `${shirtDetails.alt} - Size: ${shirtDetails.size}`,
+        amount: {
+          value: "60.00"
+        }
+      }]
+    });
   };
 
-  const onApprove = (data: any) => {
-    return fetch("/api/capture-paypal-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        orderID: data.orderID,
-        shirtDetails,
-        customerDetails: form.getValues()
-      })
-    })
-    .then((response) => {
+  const onApprove = (data: any, actions: any) => {
+    return actions.order.capture().then((details: any) => {
       toast({
         title: "Order Successful!",
-        description: "Thank you for your purchase. You will receive an email confirmation shortly.",
+        description: `Thank you for your purchase, ${details.payer.name.given_name}! You will receive an email confirmation shortly.`,
       });
+      console.log('Transaction details:', details);
       onClose();
     });
   };
@@ -177,11 +160,13 @@ const CustomerDetailsModal = ({
             <div className="text-center mb-4">
               <p className="text-lg font-semibold">Total: $60.00</p>
             </div>
-            <PayPalButtons
-              createOrder={createOrder}
-              onApprove={onApprove}
-              style={{ layout: "vertical" }}
-            />
+            <div id="paypal-button-container">
+              <PayPalButtons
+                createOrder={createOrder}
+                onApprove={onApprove}
+                style={{ layout: "vertical" }}
+              />
+            </div>
           </div>
         )}
       </DialogContent>

@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <PayPalScriptProvider options={{ 
-      clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+      clientId: "ATRxmHVGn_KC48wjB7zUk2TphxyKeurrmhAZW7lu2Db2FhX05DS892Gzqso0uk9wfCDT9cq_U3WISFlI",
       currency: "USD",
       intent: "capture",
       components: "buttons"
