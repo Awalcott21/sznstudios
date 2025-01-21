@@ -62,7 +62,6 @@ const ShirtGrid = () => {
                 alt={shirt.alt}
                 className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
               />
-              <p className="mt-4 text-sm text-gray-600 text-center">{shirt.description}</p>
             </div>
           </div>
         ))}
