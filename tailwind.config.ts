@@ -38,6 +38,12 @@ export default {
       animation: {
         float: "float 6s ease-in-out infinite",
       },
+      rotate: {
+        'y-12': '12deg',
+      },
+      perspective: {
+        '1000': '1000px',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

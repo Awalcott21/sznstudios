@@ -50,17 +50,17 @@ const ShirtGrid = () => {
         {shirts.map((shirt, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer"
+            className="relative group cursor-pointer max-w-[300px] mx-auto w-full"
             onClick={() => setSelectedShirt(shirt)}
             style={{
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            <div className="animate-float">
+            <div className="animate-float transform transition-all duration-300 group-hover:scale-105">
               <img
                 src={shirt.src}
                 alt={shirt.alt}
-                className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-auto transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transform perspective-1000 group-hover:rotate-y-12"
               />
             </div>
           </div>
