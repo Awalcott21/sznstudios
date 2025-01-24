@@ -12,10 +12,10 @@ const Index = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <BibleVerse />
-      <div className="w-full py-3 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 text-center border-y border-slate-600">
+      <div className="w-full py-3 text-center">
         <button
           onClick={() => setIsPreOrderModalOpen(true)}
-          className="text-foreground/90 hover:text-white transition-colors text-base font-medium"
+          className="px-4 py-2 text-sm font-medium text-foreground/90 hover:text-white transition-all border border-slate-700 hover:border-slate-600 rounded-md bg-gradient-to-r from-slate-800 to-slate-800 hover:from-slate-700 hover:to-slate-700"
         >
           Pre-Orders Now Open →
         </button>
