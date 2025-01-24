@@ -53,17 +53,17 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
             <p className="text-sm text-gray-600">{shirt.description}</p>
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium">Select Size</label>
+                <label className="text-sm font-medium mb-2 block">Select Size</label>
                 <Select onValueChange={setSelectedSize} value={selectedSize}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-slate-700/30 border-slate-600">
                     <SelectValue placeholder="Choose a size" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="S">Small</SelectItem>
-                    <SelectItem value="M">Medium</SelectItem>
-                    <SelectItem value="L">Large</SelectItem>
-                    <SelectItem value="XL">X-Large</SelectItem>
-                    <SelectItem value="2XL">2X-Large</SelectItem>
+                  <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectItem value="S" className="hover:bg-slate-700">Small</SelectItem>
+                    <SelectItem value="M" className="hover:bg-slate-700">Medium</SelectItem>
+                    <SelectItem value="L" className="hover:bg-slate-700">Large</SelectItem>
+                    <SelectItem value="XL" className="hover:bg-slate-700">X-Large</SelectItem>
+                    <SelectItem value="2XL" className="hover:bg-slate-700">2X-Large</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
