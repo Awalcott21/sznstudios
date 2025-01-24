@@ -13,14 +13,11 @@ const Index = () => {
       <Header />
       <BibleVerse />
       <div className="w-full py-3 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 text-center border-y border-slate-600">
-        <p className="text-foreground text-base mb-1 font-medium">
-          NOW ACCEPTING PREORDERS, ORDERS SHIP IN 2-3 WEEKS!
-        </p>
         <button
           onClick={() => setIsPreOrderModalOpen(true)}
-          className="text-sm underline text-foreground/80 hover:text-white transition-colors"
+          className="text-foreground/90 hover:text-white transition-colors text-base font-medium"
         >
-          Click here to learn more about the pre-order process
+          Pre-Orders Now Open →
         </button>
       </div>
       <ShirtGrid />
