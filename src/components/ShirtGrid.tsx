@@ -61,17 +61,24 @@ const ShirtGrid = () => {
           <div
             key={index}
             className="relative group cursor-pointer w-full aspect-square flex items-center justify-center"
-            onClick={() => setSelectedShirt(shirt)}
+            onClick={() => index < 6 && setSelectedShirt(shirt)}
             style={{
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            <div className="animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px]">
+            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-sm' : ''}`}>
               <img
                 src={shirt.src}
                 alt={shirt.alt}
                 className="w-full h-full object-contain transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transform perspective-1000 group-hover:rotate-y-12"
               />
+              {index >= 6 && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white text-xl font-bold bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
+                    Coming Soon
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         ))}
