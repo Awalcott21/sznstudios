@@ -66,15 +66,15 @@ const ShirtGrid = () => {
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-sm' : ''}`}>
+            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-md' : ''}`}>
               <img
                 src={shirt.src}
                 alt={shirt.alt}
                 className="w-full h-full object-contain transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transform perspective-1000 group-hover:rotate-y-12"
               />
               {index >= 6 && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-xl font-bold bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <span className="text-white text-2xl font-bold px-6 py-3 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 shadow-xl">
                     Coming Soon
                   </span>
                 </div>
