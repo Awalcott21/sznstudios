@@ -37,6 +37,16 @@ const shirts = [
     alt: "God in Every SZN Colorful Shirt",
     description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
   },
+  {
+    src: "/lovable-uploads/67063bc4-a0c9-402e-8fc9-3aa55a44301b.png",
+    alt: "Con Dios Blue Shirt",
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
+  },
+  {
+    src: "/lovable-uploads/f08ebfca-8ec9-4bf6-b321-981ea5ac70ae.png",
+    alt: "Con Dios Pink Shirt",
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
+  },
 ];
 
 const ShirtGrid = () => {

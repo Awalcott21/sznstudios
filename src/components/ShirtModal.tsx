@@ -67,7 +67,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
                 </Select>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold">$60.00</span>
+                <span className="text-xl font-bold">$45.00</span>
                 <Button
                   onClick={handleOrderClick}
                   disabled={!selectedSize}
