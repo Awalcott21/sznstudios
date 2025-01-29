@@ -63,7 +63,6 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
                     <SelectItem value="M" className="hover:bg-slate-700">Medium</SelectItem>
                     <SelectItem value="L" className="hover:bg-slate-700">Large</SelectItem>
                     <SelectItem value="XL" className="hover:bg-slate-700">X-Large</SelectItem>
-                    <SelectItem value="2XL" className="hover:bg-slate-700">2X-Large</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
