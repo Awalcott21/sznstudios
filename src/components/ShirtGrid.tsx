@@ -66,7 +66,7 @@ const ShirtGrid = () => {
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-md' : ''}`}>
+            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-[2px]' : ''}`}>
               <img
                 src={shirt.src}
                 alt={shirt.alt}
