@@ -62,11 +62,14 @@ const CustomerDetailsModal = ({
   };
 
   const createOrder = (data: any, actions: any) => {
+    // Set price based on shirt
+    const price = shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00";
+    
     return actions.order.create({
       purchase_units: [{
         description: `${shirtDetails.alt} - Size: ${shirtDetails.size}`,
         amount: {
-          value: "60.00"
+          value: price
         }
       }]
     });
@@ -158,7 +161,9 @@ const CustomerDetailsModal = ({
         ) : (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <p className="text-lg font-semibold">Total: $60.00</p>
+              <p className="text-lg font-semibold">
+                Total: ${shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00"}
+              </p>
             </div>
             <div id="paypal-button-container">
               <PayPalButtons
