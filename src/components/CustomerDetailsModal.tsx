@@ -164,7 +164,7 @@ const CustomerDetailsModal = ({
                 Total: ${shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00"}
               </p>
             </div>
-            <div id="paypal-button-container">
+            <div id="paypal-button-container" className="max-w-[340px] mx-auto">
               <PayPalButtons
                 createOrder={createOrder}
                 onApprove={onApprove}
