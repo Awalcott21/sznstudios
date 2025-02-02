@@ -17,7 +17,7 @@ const BibleVerse = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentVerseIndex((prev) => (prev + 1) % verses.length);
-    }, 4000);
+    }, 8000); // Changed from 4000 to 8000 ms
 
     return () => clearInterval(interval);
   }, []);

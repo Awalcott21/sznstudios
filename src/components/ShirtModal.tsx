@@ -37,6 +37,9 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
     setShowCustomerDetails(false);
   };
 
+  // Set price to $1 for the first shirt, $45 for others
+  const price = shirt.alt === "God in Every SZN Shirt" ? "1.00" : "45.00";
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
@@ -67,7 +70,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
                 </Select>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold">$45.00</span>
+                <span className="text-xl font-bold">${price}</span>
                 <Button
                   onClick={handleOrderClick}
                   disabled={!selectedSize}
@@ -86,6 +89,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
         shirtDetails={{
           ...shirt,
           size: selectedSize,
+          price: parseFloat(price),
         }}
       />
     </>
