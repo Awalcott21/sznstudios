@@ -62,7 +62,6 @@ const CustomerDetailsModal = ({
   };
 
   const createOrder = (data: any, actions: any) => {
-    // Set price based on shirt
     const price = shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00";
     
     return actions.order.create({
@@ -88,10 +87,10 @@ const CustomerDetailsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[400px] w-full">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
-            Customer Details
+            {formSubmitted ? "Payment" : "Customer Details"}
           </DialogTitle>
         </DialogHeader>
         {!formSubmitted ? (

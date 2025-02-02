@@ -37,13 +37,12 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
     setShowCustomerDetails(false);
   };
 
-  // Set price to $1 for the first shirt, $45 for others
-  const price = shirt.alt === "God in Every SZN Shirt" ? "1.00" : "45.00";
+  const price = shirt.alt === "God in Every SZN Shirt" ? "1.00" : "60.00";
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[425px] w-full">
+        <DialogContent className="max-w-[400px] w-full">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
           </DialogHeader>
@@ -89,7 +88,6 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
         shirtDetails={{
           ...shirt,
           size: selectedSize,
-          price: parseFloat(price),
         }}
       />
     </>
