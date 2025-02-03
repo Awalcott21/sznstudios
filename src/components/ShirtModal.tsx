@@ -37,12 +37,10 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
     setShowCustomerDetails(false);
   };
 
-  const price = shirt.alt === "God in Every SZN Shirt" ? "1.00" : "60.00";
-
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-[400px] w-full">
+        <DialogContent className="max-w-[350px] w-full">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
           </DialogHeader>
@@ -69,7 +67,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
                 </Select>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold">${price}</span>
+                <span className="text-xl font-bold">$60.00</span>
                 <Button
                   onClick={handleOrderClick}
                   disabled={!selectedSize}

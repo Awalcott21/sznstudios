@@ -62,13 +62,11 @@ const CustomerDetailsModal = ({
   };
 
   const createOrder = (data: any, actions: any) => {
-    const price = shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00";
-    
     return actions.order.create({
       purchase_units: [{
         description: `${shirtDetails.alt} - Size: ${shirtDetails.size}`,
         amount: {
-          value: price
+          value: "60.00"
         }
       }]
     });
@@ -87,7 +85,7 @@ const CustomerDetailsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[400px] w-full">
+      <DialogContent className="max-w-[350px] w-full">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             {formSubmitted ? "Payment" : "Customer Details"}
@@ -161,10 +159,10 @@ const CustomerDetailsModal = ({
           <div className="space-y-4">
             <div className="text-center mb-4">
               <p className="text-lg font-semibold">
-                Total: ${shirtDetails.alt === "God in Every SZN Shirt" ? "1.00" : "60.00"}
+                Total: $60.00
               </p>
             </div>
-            <div id="paypal-button-container" className="max-w-[340px] mx-auto">
+            <div id="paypal-button-container" className="max-w-[300px] mx-auto">
               <PayPalButtons
                 createOrder={createOrder}
                 onApprove={onApprove}
