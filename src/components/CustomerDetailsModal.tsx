@@ -1,38 +1,15 @@
 import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useToast } from "@/components/ui/use-toast";
-import { CartItem } from "./Books";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  address: z.string().min(5, "Address must be at least 5 characters"),
-});
+import { useToast } from "@/hooks/use-toast";
+import { X, Minus, Plus } from "lucide-react";
 
 interface CustomerDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  cartItems: CartItem[];
+  cartItems: any[];
   total: number;
 }
 
@@ -42,134 +19,215 @@ const CustomerDetailsModal = ({
   cartItems,
   total,
 }: CustomerDetailsModalProps) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const { toast } = useToast();
-  
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-    },
+  const [step, setStep] = useState<"cart" | "details" | "payment">("cart");
+  const [customerDetails, setCustomerDetails] = useState({
+    name: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
   });
+  const { toast } = useToast();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted:", { ...values, cartItems });
-    setFormSubmitted(true);
+  const updateQuantity = (index: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    
+    const updatedCart = [...cartItems];
+    updatedCart[index].quantity = newQuantity;
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    
+    // Force a re-render by closing and reopening the modal
+    onClose();
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
-  const createOrder = (data: any, actions: any) => {
-    const items = cartItems.map(item => ({
-      description: item.type === 'shirt' 
-        ? `${item.item.alt} - Size: ${item.item.size}`
-        : item.item.alt,
-      amount: {
-        value: (item.item.price * item.quantity).toString()
-      }
-    }));
-
-    return actions.order.create({
-      purchase_units: items
+  const removeItem = (index: number) => {
+    const updatedCart = cartItems.filter((_, i) => i !== index);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    
+    toast({
+      title: "Item removed",
+      description: "Item has been removed from your cart.",
     });
+    
+    // Force a re-render by closing and reopening the modal
+    onClose();
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
-  const onApprove = (data: any, actions: any) => {
-    return actions.order.capture().then((details: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (Object.values(customerDetails).some((value) => !value)) {
       toast({
-        title: "Order Successful!",
-        description: `Thank you for your purchase, ${details.payer.name.given_name}! You will receive an email confirmation shortly.`,
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
       });
-      console.log('Transaction details:', details);
-      onClose();
-    });
+      return;
+    }
+    setStep("payment");
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[350px] w-full">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
-            {formSubmitted ? "Payment" : "Customer Details"}
-          </DialogTitle>
-        </DialogHeader>
-        {!formSubmitted ? (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="john@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone</FormLabel>
-                    <FormControl>
-                      <Input placeholder="(123) 456-7890" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Address</FormLabel>
-                    <FormControl>
-                      <Input placeholder="123 Main St, City, State, ZIP" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex justify-end">
-                <Button type="submit">Continue to Payment</Button>
-              </div>
-            </form>
-          </Form>
-        ) : (
+      <DialogContent className="sm:max-w-[600px]">
+        {step === "cart" && (
           <div className="space-y-4">
-            <div className="text-center mb-4">
-              <p className="text-lg font-semibold">
-                Total: ${total.toFixed(2)}
-              </p>
+            <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty</p>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  {cartItems.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between border-b pb-4">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={item.item.src}
+                          alt={item.item.alt}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                        <div>
+                          <p className="font-semibold">{item.item.alt}</p>
+                          {item.type === 'shirt' && (
+                            <p className="text-sm text-gray-500">Size: {item.size}</p>
+                          )}
+                          <p>${item.item.price * item.quantity}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateQuantity(index, item.quantity - 1)}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateQuantity(index, item.quantity + 1)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => removeItem(index)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-t pt-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <p className="text-xl font-bold">Total:</p>
+                    <p className="text-xl font-bold">${total}</p>
+                  </div>
+                  <Button 
+                    className="w-full"
+                    onClick={() => setStep("details")}
+                  >
+                    Proceed to Checkout
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {step === "details" && (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <h2 className="text-2xl font-bold mb-4">Customer Details</h2>
+            <Input
+              placeholder="Name"
+              value={customerDetails.name}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, name: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Email"
+              type="email"
+              value={customerDetails.email}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, email: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Address"
+              value={customerDetails.address}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, address: e.target.value })
+              }
+            />
+            <Input
+              placeholder="City"
+              value={customerDetails.city}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, city: e.target.value })
+              }
+            />
+            <Input
+              placeholder="State"
+              value={customerDetails.state}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, state: e.target.value })
+              }
+            />
+            <Input
+              placeholder="ZIP Code"
+              value={customerDetails.zipCode}
+              onChange={(e) =>
+                setCustomerDetails({ ...customerDetails, zipCode: e.target.value })
+              }
+            />
+            <Button type="submit" className="w-full">
+              Proceed to Payment
+            </Button>
+          </form>
+        )}
+
+        {step === "payment" && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-4">Payment</h2>
+            <div className="mb-4">
+              <p>Total to pay: ${total}</p>
             </div>
-            <div id="paypal-button-container" className="max-w-[300px] mx-auto">
+            <div className="w-full">
               <PayPalButtons
-                createOrder={createOrder}
-                onApprove={onApprove}
                 style={{ layout: "horizontal" }}
+                createOrder={(data, actions) => {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: total.toString(),
+                        },
+                      },
+                    ],
+                  });
+                }}
+                onApprove={(data, actions) => {
+                  return actions.order!.capture().then(() => {
+                    toast({
+                      title: "Success!",
+                      description: "Your payment has been processed successfully.",
+                    });
+                    localStorage.removeItem('cart');
+                    onClose();
+                  });
+                }}
               />
             </div>
           </div>
