@@ -166,7 +166,7 @@ const CustomerDetailsModal = ({
               <PayPalButtons
                 createOrder={createOrder}
                 onApprove={onApprove}
-                style={{ layout: "vertical" }}
+                style={{ layout: "horizontal" }}
               />
             </div>
           </div>
