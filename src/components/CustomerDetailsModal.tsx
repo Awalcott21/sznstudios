@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useToast } from "@/components/ui/use-toast";
+import { CartItem } from "./Books";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -31,17 +32,15 @@ const formSchema = z.object({
 interface CustomerDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  shirtDetails: {
-    src: string;
-    alt: string;
-    size: string;
-  };
+  cartItems: CartItem[];
+  total: number;
 }
 
 const CustomerDetailsModal = ({
   isOpen,
   onClose,
-  shirtDetails,
+  cartItems,
+  total,
 }: CustomerDetailsModalProps) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { toast } = useToast();
@@ -57,18 +56,22 @@ const CustomerDetailsModal = ({
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted:", { ...values, shirtDetails });
+    console.log("Form submitted:", { ...values, cartItems });
     setFormSubmitted(true);
   };
 
   const createOrder = (data: any, actions: any) => {
+    const items = cartItems.map(item => ({
+      description: item.type === 'shirt' 
+        ? `${item.item.alt} - Size: ${item.item.size}`
+        : item.item.alt,
+      amount: {
+        value: (item.item.price * item.quantity).toString()
+      }
+    }));
+
     return actions.order.create({
-      purchase_units: [{
-        description: `${shirtDetails.alt} - Size: ${shirtDetails.size}`,
-        amount: {
-          value: "60.00"
-        }
-      }]
+      purchase_units: items
     });
   };
 
@@ -159,7 +162,7 @@ const CustomerDetailsModal = ({
           <div className="space-y-4">
             <div className="text-center mb-4">
               <p className="text-lg font-semibold">
-                Total: $60.00
+                Total: ${total.toFixed(2)}
               </p>
             </div>
             <div id="paypal-button-container" className="max-w-[300px] mx-auto">

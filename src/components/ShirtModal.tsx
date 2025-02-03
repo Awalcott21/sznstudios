@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import CustomerDetailsModal from "./CustomerDetailsModal";
+import { useToast } from "./ui/use-toast";
 
 interface ShirtModalProps {
   isOpen: boolean;
@@ -27,68 +27,58 @@ interface ShirtModalProps {
 
 const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const [showCustomerDetails, setShowCustomerDetails] = useState(false);
+  const { toast } = useToast();
 
-  const handleOrderClick = () => {
-    setShowCustomerDetails(true);
-  };
-
-  const handleCustomerDetailsClose = () => {
-    setShowCustomerDetails(false);
+  const handleAddToCart = () => {
+    // Add shirt to cart logic will be implemented here
+    toast({
+      title: "Added to cart",
+      description: `${shirt.alt} (Size: ${selectedSize}) has been added to your cart.`,
+    });
+    onClose();
   };
 
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-[350px] w-full">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <img
-              src={shirt.src}
-              alt={shirt.alt}
-              className="w-full h-auto rounded-lg"
-            />
-            <p className="text-sm text-gray-600">{shirt.description}</p>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Select Size</label>
-                <Select onValueChange={setSelectedSize} value={selectedSize}>
-                  <SelectTrigger className="bg-slate-700/30 border-slate-600">
-                    <SelectValue placeholder="Choose a size" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-slate-700">
-                    <SelectItem value="S" className="hover:bg-slate-700">Small</SelectItem>
-                    <SelectItem value="M" className="hover:bg-slate-700">Medium</SelectItem>
-                    <SelectItem value="L" className="hover:bg-slate-700">Large</SelectItem>
-                    <SelectItem value="XL" className="hover:bg-slate-700">X-Large</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xl font-bold">$60.00</span>
-                <Button
-                  onClick={handleOrderClick}
-                  disabled={!selectedSize}
-                >
-                  Order Now
-                </Button>
-              </div>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-[350px] w-full">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4">
+          <img
+            src={shirt.src}
+            alt={shirt.alt}
+            className="w-full h-auto rounded-lg"
+          />
+          <p className="text-sm text-gray-600">{shirt.description}</p>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Select Size</label>
+              <Select onValueChange={setSelectedSize} value={selectedSize}>
+                <SelectTrigger className="bg-slate-700/30 border-slate-600">
+                  <SelectValue placeholder="Choose a size" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-800 border-slate-700">
+                  <SelectItem value="S" className="hover:bg-slate-700">Small</SelectItem>
+                  <SelectItem value="M" className="hover:bg-slate-700">Medium</SelectItem>
+                  <SelectItem value="L" className="hover:bg-slate-700">Large</SelectItem>
+                  <SelectItem value="XL" className="hover:bg-slate-700">X-Large</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xl font-bold">$60.00</span>
+              <Button
+                onClick={handleAddToCart}
+                disabled={!selectedSize}
+              >
+                Add to Cart
+              </Button>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
-
-      <CustomerDetailsModal
-        isOpen={showCustomerDetails}
-        onClose={handleCustomerDetailsClose}
-        shirtDetails={{
-          ...shirt,
-          size: selectedSize,
-        }}
-      />
-    </>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

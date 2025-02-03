@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
+import CustomerDetailsModal from "./CustomerDetailsModal";
 
 const books = [
   {
@@ -25,21 +26,30 @@ const books = [
   },
 ];
 
+export type CartItem = {
+  type: 'book' | 'shirt';
+  item: any;
+  quantity: number;
+};
+
 const Books = () => {
   const { toast } = useToast();
-  const [cart, setCart] = useState<Array<{ book: typeof books[0]; quantity: number }>>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const addToCart = (book: typeof books[0]) => {
     setCart((currentCart) => {
-      const existingItem = currentCart.find((item) => item.book.alt === book.alt);
+      const existingItem = currentCart.find(
+        (item) => item.type === 'book' && item.item.alt === book.alt
+      );
       if (existingItem) {
         return currentCart.map((item) =>
-          item.book.alt === book.alt
+          item.type === 'book' && item.item.alt === book.alt
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      return [...currentCart, { book, quantity: 1 }];
+      return [...currentCart, { type: 'book', item: book, quantity: 1 }];
     });
     toast({
       title: "Added to cart",
@@ -47,24 +57,30 @@ const Books = () => {
     });
   };
 
-  const removeFromCart = (bookAlt: string) => {
-    setCart((currentCart) => currentCart.filter((item) => item.book.alt !== bookAlt));
+  const removeFromCart = (type: 'book' | 'shirt', itemAlt: string) => {
+    setCart((currentCart) => 
+      currentCart.filter((item) => 
+        !(item.type === type && item.item.alt === itemAlt)
+      )
+    );
     toast({
       title: "Removed from cart",
       description: "Item has been removed from your cart.",
     });
   };
 
-  const updateQuantity = (bookAlt: string, newQuantity: number) => {
+  const updateQuantity = (type: 'book' | 'shirt', itemAlt: string, newQuantity: number) => {
     if (newQuantity < 1) return;
     setCart((currentCart) =>
       currentCart.map((item) =>
-        item.book.alt === bookAlt ? { ...item, quantity: newQuantity } : item
+        item.type === type && item.item.alt === itemAlt
+          ? { ...item, quantity: newQuantity }
+          : item
       )
     );
   };
 
-  const total = cart.reduce((sum, item) => sum + item.book.price * item.quantity, 0);
+  const total = cart.reduce((sum, item) => sum + item.item.price * item.quantity, 0);
 
   return (
     <div className="mt-8">
@@ -93,16 +109,19 @@ const Books = () => {
           <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
           <div className="space-y-4">
             {cart.map((item) => (
-              <div key={item.book.alt} className="flex items-center justify-between">
+              <div key={`${item.type}-${item.item.alt}`} className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <img
-                    src={item.book.src}
-                    alt={item.book.alt}
+                    src={item.item.src}
+                    alt={item.item.alt}
                     className="w-16 h-16 object-cover rounded"
                   />
                   <div>
-                    <p className="font-semibold">{item.book.alt}</p>
-                    <p>${item.book.price * item.quantity}</p>
+                    <p className="font-semibold">{item.item.alt}</p>
+                    {item.type === 'shirt' && (
+                      <p className="text-sm text-gray-400">Size: {item.item.size}</p>
+                    )}
+                    <p>${item.item.price * item.quantity}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -110,7 +129,7 @@ const Books = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => updateQuantity(item.book.alt, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.type, item.item.alt, item.quantity - 1)}
                     >
                       -
                     </Button>
@@ -118,7 +137,7 @@ const Books = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => updateQuantity(item.book.alt, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.type, item.item.alt, item.quantity + 1)}
                     >
                       +
                     </Button>
@@ -126,7 +145,7 @@ const Books = () => {
                   <Button
                     variant="destructive"
                     size="sm"
-                    onClick={() => removeFromCart(item.book.alt)}
+                    onClick={() => removeFromCart(item.type, item.item.alt)}
                   >
                     Remove
                   </Button>
@@ -138,12 +157,24 @@ const Books = () => {
                 <p className="text-xl font-bold">Total:</p>
                 <p className="text-xl font-bold">${total}</p>
               </div>
-              <Button className="w-full mt-4">
+              <Button 
+                className="w-full mt-4"
+                onClick={() => setShowCheckout(true)}
+              >
                 Proceed to Checkout
               </Button>
             </div>
           </div>
         </div>
+      )}
+
+      {showCheckout && (
+        <CustomerDetailsModal
+          isOpen={showCheckout}
+          onClose={() => setShowCheckout(false)}
+          cartItems={cart}
+          total={total}
+        />
       )}
     </div>
   );
