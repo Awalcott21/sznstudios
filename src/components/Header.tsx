@@ -9,24 +9,22 @@ const Header = () => {
   const [cartItems, setCartItems] = useState([]);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const items = JSON.parse(localStorage.getItem('cart') || '[]');
-      setCartItems(items);
-    };
+  const updateCartItems = () => {
+    const items = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartItems(items);
+  };
 
+  useEffect(() => {
     // Initial load
-    handleStorageChange();
+    updateCartItems();
 
     // Listen for changes
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Custom event listener for cart updates
-    window.addEventListener('cartUpdated', handleStorageChange);
+    window.addEventListener('cartUpdated', updateCartItems);
+    window.addEventListener('storage', updateCartItems);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('cartUpdated', handleStorageChange);
+      window.removeEventListener('cartUpdated', updateCartItems);
+      window.removeEventListener('storage', updateCartItems);
     };
   }, []);
 
@@ -61,14 +59,12 @@ const Header = () => {
         </div>
       </div>
 
-      {showCart && (
-        <CustomerDetailsModal
-          isOpen={showCart}
-          onClose={() => setShowCart(false)}
-          cartItems={cartItems}
-          total={total}
-        />
-      )}
+      <CustomerDetailsModal
+        isOpen={showCart}
+        onClose={() => setShowCart(false)}
+        cartItems={cartItems}
+        total={total}
+      />
     </header>
   );
 };

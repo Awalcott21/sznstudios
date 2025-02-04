@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button } from "./ui/button";
+import React from "react";
 import { useToast } from "@/hooks/use-toast";
+import BookCard from "./BookCard";
 
 const books = [
   {
@@ -52,31 +52,19 @@ const Books = () => {
 
     localStorage.setItem('cart', JSON.stringify(cartItems));
     
-    toast({
-      title: "Added to cart",
-      description: `${book.alt} has been added to your cart.`,
-    });
+    // Dispatch custom event to notify cart update
+    window.dispatchEvent(new Event('cartUpdated'));
   };
 
   return (
     <div className="mt-8">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         {books.map((book) => (
-          <div key={book.alt} className="flex flex-col items-center">
-            <img
-              src={book.src}
-              alt={book.alt}
-              className="w-full max-w-[250px] h-auto rounded-lg shadow-lg"
-            />
-            <p className="mt-2 font-semibold">{book.alt}</p>
-            <p className="text-lg font-bold">${book.price}</p>
-            <Button
-              onClick={() => addToCart(book)}
-              className="mt-2"
-            >
-              Add to Cart
-            </Button>
-          </div>
+          <BookCard 
+            key={book.alt}
+            book={book}
+            onAddToCart={() => addToCart(book)}
+          />
         ))}
       </div>
     </div>
