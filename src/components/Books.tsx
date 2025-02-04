@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
-import CustomerDetailsModal from "./CustomerDetailsModal";
+import { useToast } from "@/hooks/use-toast";
 
 const books = [
   {
@@ -34,53 +33,30 @@ export type CartItem = {
 
 const Books = () => {
   const { toast } = useToast();
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [showCheckout, setShowCheckout] = useState(false);
 
   const addToCart = (book: typeof books[0]) => {
-    setCart((currentCart) => {
-      const existingItem = currentCart.find(
-        (item) => item.type === 'book' && item.item.alt === book.alt
-      );
-      if (existingItem) {
-        return currentCart.map((item) =>
-          item.type === 'book' && item.item.alt === book.alt
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...currentCart, { type: 'book', item: book, quantity: 1 }];
-    });
+    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItemIndex = cartItems.findIndex(
+      (item: CartItem) => item.type === 'book' && item.item.alt === book.alt
+    );
+
+    if (existingItemIndex > -1) {
+      cartItems[existingItemIndex].quantity += 1;
+    } else {
+      cartItems.push({
+        type: 'book',
+        item: book,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    
     toast({
       title: "Added to cart",
       description: `${book.alt} has been added to your cart.`,
     });
   };
-
-  const removeFromCart = (type: 'book' | 'shirt', itemAlt: string) => {
-    setCart((currentCart) => 
-      currentCart.filter((item) => 
-        !(item.type === type && item.item.alt === itemAlt)
-      )
-    );
-    toast({
-      title: "Removed from cart",
-      description: "Item has been removed from your cart.",
-    });
-  };
-
-  const updateQuantity = (type: 'book' | 'shirt', itemAlt: string, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCart((currentCart) =>
-      currentCart.map((item) =>
-        item.type === type && item.item.alt === itemAlt
-          ? { ...item, quantity: newQuantity }
-          : item
-      )
-    );
-  };
-
-  const total = cart.reduce((sum, item) => sum + item.item.price * item.quantity, 0);
 
   return (
     <div className="mt-8">
@@ -103,79 +79,6 @@ const Books = () => {
           </div>
         ))}
       </div>
-
-      {cart.length > 0 && (
-        <div className="bg-slate-800 p-6 rounded-lg mt-8">
-          <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
-          <div className="space-y-4">
-            {cart.map((item) => (
-              <div key={`${item.type}-${item.item.alt}`} className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <img
-                    src={item.item.src}
-                    alt={item.item.alt}
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                  <div>
-                    <p className="font-semibold">{item.item.alt}</p>
-                    {item.type === 'shirt' && (
-                      <p className="text-sm text-gray-400">Size: {item.item.size}</p>
-                    )}
-                    <p>${item.item.price * item.quantity}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updateQuantity(item.type, item.item.alt, item.quantity - 1)}
-                    >
-                      -
-                    </Button>
-                    <span className="w-8 text-center">{item.quantity}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updateQuantity(item.type, item.item.alt, item.quantity + 1)}
-                    >
-                      +
-                    </Button>
-                  </div>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => removeFromCart(item.type, item.item.alt)}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              </div>
-            ))}
-            <div className="border-t border-slate-600 pt-4 mt-4">
-              <div className="flex justify-between items-center">
-                <p className="text-xl font-bold">Total:</p>
-                <p className="text-xl font-bold">${total}</p>
-              </div>
-              <Button 
-                className="w-full mt-4"
-                onClick={() => setShowCheckout(true)}
-              >
-                Proceed to Checkout
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showCheckout && (
-        <CustomerDetailsModal
-          isOpen={showCheckout}
-          onClose={() => setShowCheckout(false)}
-          cartItems={cart}
-          total={total}
-        />
-      )}
     </div>
   );
 };
