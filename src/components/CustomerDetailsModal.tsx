@@ -212,6 +212,7 @@ const CustomerDetailsModal = ({
                     purchase_units: [
                       {
                         amount: {
+                          currency_code: "USD",
                           value: total.toString(),
                         },
                       },
