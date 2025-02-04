@@ -5,17 +5,17 @@ import CustomerDetailsModal from "./CustomerDetailsModal";
 
 const books = [
   {
-    src: "/lovable-uploads/c3d212d1-945c-4ed9-b7c2-47b92dfcce47.png",
+    src: "/lovable-uploads/e97927bb-0872-4d9a-bdd0-622cf4ab483f.png",
     alt: "Book of Psalms",
     price: 50,
   },
   {
-    src: "/lovable-uploads/563902cb-0514-47ef-9b3d-c8a3df1effbc.png",
+    src: "/lovable-uploads/0746350a-9fe8-4b71-a71a-1ce25673d7cb.png",
     alt: "Book of Exodus",
     price: 50,
   },
   {
-    src: "/lovable-uploads/64cec346-7ea0-4d58-94e2-418e857cc59f.png",
+    src: "/lovable-uploads/4494f646-4185-4dc3-91f1-b5a8f280f749.png",
     alt: "Book of Genesis",
     price: 50,
   },

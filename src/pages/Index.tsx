@@ -12,7 +12,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <BibleVerse />
+      <div className="mt-24">
+        <BibleVerse />
+      </div>
       <div className="w-full py-3 text-center">
         <button
           onClick={() => setIsPreOrderModalOpen(true)}
