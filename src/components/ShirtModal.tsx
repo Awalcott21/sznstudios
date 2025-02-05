@@ -30,7 +30,28 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
   const { toast } = useToast();
 
   const handleAddToCart = () => {
-    // Add shirt to cart logic will be implemented here
+    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItemIndex = cartItems.findIndex(
+      (item: any) => item.type === 'shirt' && item.item.alt === shirt.alt && item.item.size === selectedSize
+    );
+
+    if (existingItemIndex > -1) {
+      cartItems[existingItemIndex].quantity += 1;
+    } else {
+      cartItems.push({
+        type: 'shirt',
+        item: {
+          ...shirt,
+          price: 60,
+          size: selectedSize
+        },
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    window.dispatchEvent(new Event('cartUpdated'));
+    
     toast({
       title: "Added to cart",
       description: `${shirt.alt} (Size: ${selectedSize}) has been added to your cart.`,

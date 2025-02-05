@@ -4,17 +4,17 @@ import BookCard from "./BookCard";
 
 const books = [
   {
-    src: "/lovable-uploads/e97927bb-0872-4d9a-bdd0-622cf4ab483f.png",
+    src: "/lovable-uploads/93c1e241-e8ec-41fc-b50c-49ef370c5c48.png",
     alt: "Book of Psalms",
     price: 50,
   },
   {
-    src: "/lovable-uploads/0746350a-9fe8-4b71-a71a-1ce25673d7cb.png",
+    src: "/lovable-uploads/ab72aab9-da5a-4c57-91a8-79fa78f96c5f.png",
     alt: "Book of Exodus",
     price: 50,
   },
   {
-    src: "/lovable-uploads/4494f646-4185-4dc3-91f1-b5a8f280f749.png",
+    src: "/lovable-uploads/eed50cbd-46f6-46df-aaa0-5196b441f723.png",
     alt: "Book of Genesis",
     price: 50,
   },
@@ -51,8 +51,6 @@ const Books = () => {
     }
 
     localStorage.setItem('cart', JSON.stringify(cartItems));
-    
-    // Dispatch custom event to notify cart update
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
