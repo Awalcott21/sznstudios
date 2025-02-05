@@ -5,6 +5,7 @@ import ShirtGrid from "../components/ShirtGrid";
 import PreOrderModal from "../components/PreOrderModal";
 import Books from "../components/Books";
 import Footer from "../components/Footer";
+import FloatingVinyl from "../components/FloatingVinyl";
 
 const Index = () => {
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
@@ -25,6 +26,7 @@ const Index = () => {
       </div>
       <Books />
       <ShirtGrid />
+      <FloatingVinyl />
       <PreOrderModal
         isOpen={isPreOrderModalOpen}
         onClose={() => setIsPreOrderModalOpen(false)}

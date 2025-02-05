@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { PayPalButtons, PayPalHostedField, PayPalHostedFieldsProvider } from "@paypal/react-paypal-js";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
 type CartItem = {
   type: 'book' | 'shirt';
@@ -29,7 +29,6 @@ interface CustomerDetailsModalProps {
 const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDetailsModalProps) => {
   const createOrder = (data: any, actions: any) => {
     return actions.order.create({
-      intent: "CAPTURE",
       purchase_units: [
         {
           amount: {
@@ -38,6 +37,16 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
           }
         }
       ]
+    });
+  };
+
+  const onApprove = (data: any, actions: any) => {
+    return actions.order.capture().then((details: any) => {
+      console.log('Transaction completed:', details);
+      // Clear cart and show success message here
+      localStorage.setItem('cart', '[]');
+      window.dispatchEvent(new Event('cartUpdated'));
+      onClose();
     });
   };
 
@@ -84,18 +93,8 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
               <div className="space-y-4">
                 <PayPalButtons 
                   createOrder={createOrder}
-                  style={{ layout: "horizontal" }}
-                  fundingSource="paypal"
-                />
-                <PayPalButtons 
-                  createOrder={createOrder}
-                  style={{ layout: "horizontal" }}
-                  fundingSource="card"
-                />
-                <PayPalButtons 
-                  createOrder={createOrder}
-                  style={{ layout: "horizontal" }}
-                  fundingSource="applepay"
+                  onApprove={onApprove}
+                  style={{ layout: "vertical" }}
                 />
                 <Button onClick={onClose} variant="outline" className="w-full">
                   Close
