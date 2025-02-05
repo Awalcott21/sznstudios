@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useToast } from "./ui/use-toast";
 
 type CartItem = {
   type: 'book' | 'shirt';
@@ -27,26 +28,72 @@ interface CustomerDetailsModalProps {
 }
 
 const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDetailsModalProps) => {
-  const createOrder = (data: any, actions: any) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            currency_code: "USD",
-            value: total.toString()
+  const { toast } = useToast();
+
+  const createOrder = async (data: any, actions: any) => {
+    console.log('Creating PayPal order with total:', total);
+    try {
+      return await actions.order.create({
+        purchase_units: [
+          {
+            amount: {
+              currency_code: "USD",
+              value: total.toFixed(2),
+            },
+            description: "SZN Studios Order",
+            items: cartItems.map(item => ({
+              name: item.item.alt,
+              unit_amount: {
+                currency_code: "USD",
+                value: item.item.price.toFixed(2)
+              },
+              quantity: item.quantity
+            }))
           }
-        }
-      ]
-    });
+        ]
+      });
+    } catch (error) {
+      console.error('Error creating PayPal order:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "There was a problem creating your order. Please try again.",
+      });
+      throw error;
+    }
   };
 
-  const onApprove = (data: any, actions: any) => {
-    return actions.order.capture().then((details: any) => {
+  const onApprove = async (data: any, actions: any) => {
+    try {
+      const details = await actions.order.capture();
       console.log('Transaction completed:', details);
-      // Clear cart and show success message here
+      
+      // Clear cart and show success message
       localStorage.setItem('cart', '[]');
       window.dispatchEvent(new Event('cartUpdated'));
+      
+      toast({
+        title: "Order Successful!",
+        description: "Thank you for your purchase. Your order has been confirmed.",
+      });
+      
       onClose();
+    } catch (error) {
+      console.error('Error capturing PayPal order:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "There was a problem completing your order. Please try again.",
+      });
+    }
+  };
+
+  const onError = (err: any) => {
+    console.error('PayPal error:', err);
+    toast({
+      variant: "destructive",
+      title: "PayPal Error",
+      description: "There was a problem with PayPal. Please try again.",
     });
   };
 
@@ -86,7 +133,7 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
               <div className="border-t pt-4">
                 <div className="flex justify-between font-bold">
                   <span>Total:</span>
-                  <span>${total}</span>
+                  <span>${total.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -94,7 +141,11 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
                 <PayPalButtons 
                   createOrder={createOrder}
                   onApprove={onApprove}
-                  style={{ layout: "vertical" }}
+                  onError={onError}
+                  style={{ 
+                    layout: "vertical",
+                    shape: "rect",
+                  }}
                 />
                 <Button onClick={onClose} variant="outline" className="w-full">
                   Close
