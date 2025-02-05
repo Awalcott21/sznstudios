@@ -14,7 +14,10 @@ const App = () => (
       clientId: "ATRxmHVGn_KC48wjB7zUk2TphxyKeurrmhAZW7lu2Db2FhX05DS892Gzqso0uk9wfCDT9cq_U3WISFlI",
       currency: "USD",
       intent: "capture",
-      components: "buttons"
+      components: "buttons,hosted-fields",
+      dataClientToken: "EJxbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      vault: true,
+      enableFunding: ["card", "venmo", "applepay"]
     }}>
       <TooltipProvider>
         <BrowserRouter>

@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButtons, PayPalHostedField, PayPalHostedFieldsProvider } from "@paypal/react-paypal-js";
 
 type CartItem = {
   type: 'book' | 'shirt';
@@ -85,6 +85,17 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
                 <PayPalButtons 
                   createOrder={createOrder}
                   style={{ layout: "horizontal" }}
+                  fundingSource="paypal"
+                />
+                <PayPalButtons 
+                  createOrder={createOrder}
+                  style={{ layout: "horizontal" }}
+                  fundingSource="card"
+                />
+                <PayPalButtons 
+                  createOrder={createOrder}
+                  style={{ layout: "horizontal" }}
+                  fundingSource="applepay"
                 />
                 <Button onClick={onClose} variant="outline" className="w-full">
                   Close
