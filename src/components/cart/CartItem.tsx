@@ -1,4 +1,6 @@
 import React from "react";
+import { X } from "lucide-react";
+import { Button } from "../ui/button";
 
 type CartItemProps = {
   item: {
@@ -9,9 +11,10 @@ type CartItemProps = {
   };
   type: 'book' | 'shirt';
   quantity: number;
+  onRemove: () => void;
 };
 
-const CartItem = ({ item, type, quantity }: CartItemProps) => {
+const CartItem = ({ item, type, quantity, onRemove }: CartItemProps) => {
   return (
     <div className="flex items-center space-x-4">
       <img 
@@ -26,8 +29,16 @@ const CartItem = ({ item, type, quantity }: CartItemProps) => {
         )}
         <p className="text-sm">Quantity: {quantity}</p>
       </div>
-      <div className="text-right">
+      <div className="text-right flex flex-col items-end gap-2">
         <p className="font-medium">${(item.price * quantity).toFixed(2)}</p>
+        <Button 
+          variant="ghost" 
+          size="icon"
+          onClick={onRemove}
+          className="h-8 w-8"
+        >
+          <X className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

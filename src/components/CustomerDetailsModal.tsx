@@ -8,6 +8,7 @@ import {
 import { Button } from "./ui/button";
 import CartItem from "./cart/CartItem";
 import PayPalCheckout from "./cart/PayPalCheckout";
+import { useToast } from "@/hooks/use-toast";
 
 type CartItem = {
   type: 'book' | 'shirt';
@@ -28,10 +29,27 @@ interface CustomerDetailsModalProps {
 }
 
 const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDetailsModalProps) => {
+  const { toast } = useToast();
+
   const handleSuccess = () => {
     localStorage.setItem('cart', '[]');
     window.dispatchEvent(new Event('cartUpdated'));
     onClose();
+    toast({
+      title: "Success!",
+      description: "Your order has been placed successfully.",
+    });
+  };
+
+  const handleRemoveItem = (index: number) => {
+    const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    currentCart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(currentCart));
+    window.dispatchEvent(new Event('cartUpdated'));
+    toast({
+      title: "Item removed",
+      description: "Item has been removed from your cart.",
+    });
   };
 
   return (
@@ -51,6 +69,7 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
                   item={item.item}
                   type={item.type}
                   quantity={item.quantity}
+                  onRemove={() => handleRemoveItem(index)}
                 />
               ))}
               
