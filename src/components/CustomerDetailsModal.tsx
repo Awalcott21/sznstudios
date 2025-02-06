@@ -33,25 +33,31 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
   const createOrder = async (data: any, actions: any) => {
     console.log('Creating PayPal order with total:', total);
     try {
-      return await actions.order.create({
-        purchase_units: [
-          {
-            amount: {
-              currency_code: "USD",
-              value: total.toFixed(2),
+      const orderData = {
+        purchase_units: [{
+          amount: {
+            value: total.toFixed(2),
+            currency_code: "USD",
+            breakdown: {
+              item_total: {
+                value: total.toFixed(2),
+                currency_code: "USD"
+              }
+            }
+          },
+          items: cartItems.map(item => ({
+            name: item.item.alt,
+            unit_amount: {
+              value: item.item.price.toFixed(2),
+              currency_code: "USD"
             },
-            description: "SZN Studios Order",
-            items: cartItems.map(item => ({
-              name: item.item.alt,
-              unit_amount: {
-                currency_code: "USD",
-                value: item.item.price.toFixed(2)
-              },
-              quantity: item.quantity
-            }))
-          }
-        ]
-      });
+            quantity: item.quantity.toString()
+          }))
+        }]
+      };
+      
+      console.log('PayPal order data:', orderData);
+      return actions.order.create(orderData);
     } catch (error) {
       console.error('Error creating PayPal order:', error);
       toast({
@@ -68,7 +74,6 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
       const details = await actions.order.capture();
       console.log('Transaction completed:', details);
       
-      // Clear cart and show success message
       localStorage.setItem('cart', '[]');
       window.dispatchEvent(new Event('cartUpdated'));
       
@@ -122,7 +127,7 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
                   <p className="text-sm">Quantity: {item.quantity}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium">${item.item.price * item.quantity}</p>
+                  <p className="font-medium">${(item.item.price * item.quantity).toFixed(2)}</p>
                 </div>
               </div>
             ))
@@ -145,7 +150,9 @@ const CustomerDetailsModal = ({ isOpen, onClose, cartItems, total }: CustomerDet
                   style={{ 
                     layout: "vertical",
                     shape: "rect",
+                    label: "checkout"
                   }}
+                  forceReRender={[total, cartItems]}
                 />
                 <Button onClick={onClose} variant="outline" className="w-full">
                   Close
