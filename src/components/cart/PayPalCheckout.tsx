@@ -1,6 +1,7 @@
 import React from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 type CartItem = {
   type: 'book' | 'shirt';
@@ -22,34 +23,22 @@ interface PayPalCheckoutProps {
 const PayPalCheckout = ({ cartItems, total, onSuccess }: PayPalCheckoutProps) => {
   const { toast } = useToast();
 
-  const createOrder = async (data: any, actions: any) => {
-    console.log('Creating PayPal order with total:', total);
+  const createOrder = async () => {
     try {
-      const orderData = {
-        purchase_units: [{
-          amount: {
-            currency_code: "USD",
-            value: total.toFixed(2),
-            breakdown: {
-              item_total: {
-                currency_code: "USD",
-                value: total.toFixed(2)
-              }
-            }
-          },
-          items: cartItems.map(item => ({
-            name: item.item.alt,
-            unit_amount: {
-              currency_code: "USD",
-              value: item.item.price.toFixed(2)
-            },
-            quantity: item.quantity.toString()
-          }))
-        }]
-      };
-      
-      console.log('PayPal order data:', orderData);
-      return actions.order.create(orderData);
+      const { data, error } = await supabase.functions.invoke('paypal-checkout', {
+        body: {
+          items: cartItems,
+          total: total
+        }
+      });
+
+      if (error) {
+        console.error('Error creating PayPal order:', error);
+        throw error;
+      }
+
+      console.log('PayPal order created:', data);
+      return data.id;
     } catch (error) {
       console.error('Error creating PayPal order:', error);
       toast({
