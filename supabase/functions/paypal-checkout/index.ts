@@ -23,14 +23,16 @@ serve(async (req) => {
       throw new Error('PayPal credentials not configured');
     }
 
+    // Encode credentials for Basic Auth
+    const credentials = btoa(`${paypalClientId}:${paypalSecret}`);
     console.log('Attempting to get PayPal access token');
-    // Get access token
+
+    // Get access token using Basic Auth
     const auth = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Accept-Language': 'en_US',
-        'Authorization': `Basic ${btoa(`${paypalClientId}:${paypalSecret}`)}`,
+        'Authorization': `Basic ${credentials}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: 'grant_type=client_credentials'
@@ -45,13 +47,25 @@ serve(async (req) => {
     const { access_token } = await auth.json()
     console.log('Successfully obtained PayPal access token');
     
-    console.log('Creating PayPal order with data:', { total, itemCount: items.length });
-    // Create order
+    // Format items for PayPal
+    const formattedItems = items.map((item: any) => ({
+      name: item.item.alt,
+      unit_amount: {
+        currency_code: 'USD',
+        value: item.item.price.toFixed(2)
+      },
+      quantity: item.quantity
+    }));
+
+    console.log('Creating PayPal order with data:', { total, items: formattedItems });
+    
+    // Create order with proper format
     const order = await fetch('https://api-m.sandbox.paypal.com/v2/checkout/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${access_token}`,
+        'Prefer': 'return=representation'
       },
       body: JSON.stringify({
         intent: 'CAPTURE',
@@ -66,14 +80,7 @@ serve(async (req) => {
               }
             }
           },
-          items: items.map((item: any) => ({
-            name: item.item.alt,
-            unit_amount: {
-              currency_code: 'USD',
-              value: item.item.price.toFixed(2)
-            },
-            quantity: item.quantity.toString()
-          }))
+          items: formattedItems
         }]
       })
     })
