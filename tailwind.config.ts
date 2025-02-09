@@ -23,10 +23,10 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#eee",
+        background: "#FDE1D3",
         foreground: "#8E9196",
         slate: {
-          DEFAULT: "#eee",
+          DEFAULT: "#FDE1D3",
           foreground: "#8E9196",
         },
       },
