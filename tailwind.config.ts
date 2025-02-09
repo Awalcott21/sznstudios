@@ -23,10 +23,10 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#FDE1D3",
+        background: "#F8F9FA",
         foreground: "#8E9196",
         slate: {
-          DEFAULT: "#FDE1D3",
+          DEFAULT: "#F8F9FA",
           foreground: "#8E9196",
         },
       },
@@ -49,3 +49,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
