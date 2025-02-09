@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import ShirtModal from "./ShirtModal";
 
@@ -79,7 +80,7 @@ const ShirtGrid = () => {
               <img
                 src={shirt.src}
                 alt={shirt.alt}
-                className="w-full h-full object-contain transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transform perspective-1000 group-hover:rotate-y-12"
+                className="w-full h-full object-contain transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2"
               />
               {index >= 6 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">
