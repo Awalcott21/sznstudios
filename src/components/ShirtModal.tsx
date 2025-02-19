@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -15,17 +14,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useToast } from "./ui/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ShirtModalProps {
   isOpen: boolean;
   onClose: () => void;
   shirt: {
-    frontSrc: string;
-    backSrc: string;
+    src: string;
     alt: string;
     description: string;
-    price: number;
   };
 }
 
@@ -46,6 +42,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
         type: 'shirt',
         item: {
           ...shirt,
+          price: 60,
           size: selectedSize
         },
         quantity: 1
@@ -64,31 +61,16 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px] w-full">
+      <DialogContent className="max-w-[350px] w-full">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4">
-          <Tabs defaultValue="front" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="front">Front</TabsTrigger>
-              <TabsTrigger value="back">Back</TabsTrigger>
-            </TabsList>
-            <TabsContent value="front">
-              <img
-                src={shirt.frontSrc}
-                alt={`${shirt.alt} - Front`}
-                className="w-full h-auto rounded-lg"
-              />
-            </TabsContent>
-            <TabsContent value="back">
-              <img
-                src={shirt.backSrc}
-                alt={`${shirt.alt} - Back`}
-                className="w-full h-auto rounded-lg"
-              />
-            </TabsContent>
-          </Tabs>
+          <img
+            src={shirt.src}
+            alt={shirt.alt}
+            className="w-full h-auto rounded-lg"
+          />
           <p className="text-sm text-gray-600">{shirt.description}</p>
           <div className="space-y-4">
             <div>
@@ -106,7 +88,7 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
               </Select>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold">${shirt.price}.00</span>
+              <span className="text-xl font-bold">$60.00</span>
               <Button
                 onClick={handleAddToCart}
                 disabled={!selectedSize}
