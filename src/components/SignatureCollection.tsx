@@ -16,6 +16,20 @@ const signatureItems = [
     price: 80,
     description: "Heavy-weight cotton blend hoodie with custom design. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
   },
+  {
+    src: "/lovable-uploads/4810e530-231f-4c06-bb74-357a9d721554.png",
+    backSrc: "/lovable-uploads/1bf62e1a-9411-4b35-a447-ce11a038e7ce.png",
+    alt: "SZN's Change God Remains Shirt",
+    price: 60,
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
+  },
+  {
+    src: "/lovable-uploads/3480baa9-9602-41f8-b45e-70a13fbd278a.png",
+    backSrc: "/lovable-uploads/a5b9ce1d-1e65-4d17-a5fb-9bb7f16b8a5d.png",
+    alt: "SZN's Change Camo Shirt",
+    price: 60,
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
+  }
 ];
 
 const SignatureCollection = () => {
@@ -49,7 +63,7 @@ const SignatureCollection = () => {
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Signature Collection</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         {signatureItems.map((item) => (
           <BookCard 
             key={item.alt}
