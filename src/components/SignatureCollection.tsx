@@ -1,6 +1,7 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import BookCard from "./BookCard";
+import ShirtModal from "./ShirtModal";
 
 const signatureItems = [
   {
@@ -28,44 +29,43 @@ const signatureItems = [
 
 const SignatureCollection = () => {
   const { toast } = useToast();
-
-  const addToCart = (item: typeof signatureItems[0]) => {
-    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItemIndex = cartItems.findIndex(
-      (cartItem: any) => cartItem.type === 'signature' && cartItem.item.alt === item.alt
-    );
-
-    if (existingItemIndex > -1) {
-      cartItems[existingItemIndex].quantity += 1;
-    } else {
-      cartItems.push({
-        type: 'signature',
-        item: item,
-        quantity: 1
-      });
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-    window.dispatchEvent(new Event('cartUpdated'));
-    
-    toast({
-      title: "Added to cart",
-      description: `${item.alt} has been added to your cart.`,
-    });
-  };
+  const [selectedItem, setSelectedItem] = useState<(typeof signatureItems)[0] | null>(null);
 
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Signature Collection</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         {signatureItems.map((item) => (
-          <BookCard 
+          <div
             key={item.alt}
-            book={item}
-            onAddToCart={() => addToCart(item)}
-          />
+            className="relative group cursor-pointer"
+            onClick={() => setSelectedItem(item)}
+          >
+            <div className="flex flex-col items-center">
+              <div 
+                className="relative cursor-pointer"
+                onMouseEnter={() => {/* hover handling will be done by ShirtModal */}}
+                onMouseLeave={() => {/* hover handling will be done by ShirtModal */}}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="w-full max-w-[250px] h-auto rounded-lg shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                />
+              </div>
+              <p className="mt-2 font-semibold text-center">{item.alt}</p>
+              <p className="text-lg font-bold">${item.price}</p>
+            </div>
+          </div>
         ))}
       </div>
+      {selectedItem && (
+        <ShirtModal
+          isOpen={!!selectedItem}
+          onClose={() => setSelectedItem(null)}
+          shirt={selectedItem}
+        />
+      )}
     </div>
   );
 };
