@@ -27,6 +27,7 @@ const Index = () => {
       </div>
       <Books />
       <SignatureCollection />
+      <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Reflection SZN</h2>
       <ShirtGrid />
       <PreOrderModal
         isOpen={isPreOrderModalOpen}
