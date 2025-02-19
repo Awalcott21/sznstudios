@@ -1,14 +1,8 @@
-
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
 import BookCard from "./BookCard";
 
 const signatureItems = [
-  {
-    src: "/lovable-uploads/53dd68b2-9d38-490a-a2cd-4115b65a9012.png",
-    alt: "Seasons Change God Remains - Black",
-    price: 60,
-  },
   {
     src: "/lovable-uploads/469d4cef-4eb6-483e-a468-a2e6193b4e9e.png",
     backSrc: "/lovable-uploads/e94ce0d0-7887-4d50-a0dc-92bfe39be33e.png",
