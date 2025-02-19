@@ -1,9 +1,11 @@
+
 import React, { useState } from "react";
 import Header from "../components/Header";
 import BibleVerse from "../components/BibleVerse";
 import ShirtGrid from "../components/ShirtGrid";
 import PreOrderModal from "../components/PreOrderModal";
 import Books from "../components/Books";
+import SignatureCollection from "../components/SignatureCollection";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -24,6 +26,7 @@ const Index = () => {
         </button>
       </div>
       <Books />
+      <SignatureCollection />
       <ShirtGrid />
       <PreOrderModal
         isOpen={isPreOrderModalOpen}
