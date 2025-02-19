@@ -11,10 +11,10 @@ const shirts = [
     price: 60,
   },
   {
-    src: "/lovable-uploads/4f40f344-4eac-46d3-b41b-11aa5d74f32f.png",
-    backSrc: "/lovable-uploads/4f40f344-4eac-46d3-b41b-11aa5d74f32f.png",
-    alt: "Camo Hoodie",
-    description: "Heavy-weight cotton blend hoodie with custom camo pattern. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
+    src: "/lovable-uploads/2cfaa4c7-485c-4c43-aa20-b5c97b5968e2.png",
+    backSrc: "/lovable-uploads/93c1e241-e8ec-41fc-b50c-49ef370c5c48.png",
+    alt: "God's Glory Hoodie",
+    description: "Heavy-weight cotton blend hoodie with custom design. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
     price: 60,
   },
   {
