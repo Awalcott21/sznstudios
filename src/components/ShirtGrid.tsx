@@ -11,8 +11,8 @@ const shirts = [
     price: 60,
   },
   {
-    src: "/lovable-uploads/2cfaa4c7-485c-4c43-aa20-b5c97b5968e2.png",
-    backSrc: "/lovable-uploads/93c1e241-e8ec-41fc-b50c-49ef370c5c48.png",
+    src: "/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png",
+    backSrc: "/lovable-uploads/64cec346-7ea0-4d58-94e2-418e857cc59f.png",
     alt: "God's Glory Hoodie",
     description: "Heavy-weight cotton blend hoodie with custom design. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
     price: 60,
