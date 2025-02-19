@@ -9,6 +9,13 @@ const signatureItems = [
     alt: "Seasons Change God Remains - Black",
     price: 60,
   },
+  {
+    src: "/lovable-uploads/469d4cef-4eb6-483e-a468-a2e6193b4e9e.png",
+    backSrc: "/lovable-uploads/e94ce0d0-7887-4d50-a0dc-92bfe39be33e.png",
+    alt: "SZN's Change Camo Hoodie",
+    price: 80,
+    description: "Heavy-weight cotton blend hoodie with custom design. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
+  },
 ];
 
 const SignatureCollection = () => {
