@@ -37,7 +37,7 @@ const Header = () => {
           <img
             src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
             alt="SZN Studios Logo"
-            className="h-12 w-auto"
+            className="h-20 w-auto" // Increased from h-12 to h-20
           />
         </div>
         <div className="flex-1 flex justify-end">

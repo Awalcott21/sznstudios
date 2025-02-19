@@ -8,7 +8,7 @@ const Footer = () => {
         <img
           src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
           alt="SZN Studios Logo"
-          className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity"
+          className="h-24 w-auto opacity-70 hover:opacity-100 transition-opacity" // Increased from h-16 to h-24
         />
       </div>
     </footer>
