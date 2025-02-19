@@ -53,8 +53,6 @@ const SignatureCollection = () => {
                   className="w-full max-w-[250px] h-auto rounded-lg shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 />
               </div>
-              <p className="mt-2 font-semibold text-center">{item.alt}</p>
-              <p className="text-lg font-bold">${item.price}</p>
             </div>
           </div>
         ))}
