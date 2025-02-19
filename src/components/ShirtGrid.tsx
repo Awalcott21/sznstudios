@@ -1,8 +1,21 @@
-
 import React, { useState } from "react";
 import ShirtModal from "./ShirtModal";
 
 const shirts = [
+  {
+    src: "/lovable-uploads/410cc1f9-28ee-4a4f-8140-5ccfe6178335.png",
+    backSrc: "/lovable-uploads/c7aaa39e-7a48-48b4-838d-1f920df51cb3.png",
+    alt: "SZN's Change God Remains Shirt",
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
+    price: 60,
+  },
+  {
+    src: "/lovable-uploads/4f40f344-4eac-46d3-b41b-11aa5d74f32f.png",
+    backSrc: "/lovable-uploads/4f40f344-4eac-46d3-b41b-11aa5d74f32f.png",
+    alt: "Camo Hoodie",
+    description: "Heavy-weight cotton blend hoodie with custom camo pattern. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
+    price: 60,
+  },
   {
     src: "/lovable-uploads/405216d7-eb18-4083-ba41-b00257b9e05f.png",
     alt: "God in Every SZN Shirt",
