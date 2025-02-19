@@ -1,10 +1,11 @@
+
 import React, { useState } from "react";
 import ShirtModal from "./ShirtModal";
 
 const shirts = [
   {
-    src: "/lovable-uploads/410cc1f9-28ee-4a4f-8140-5ccfe6178335.png",
-    backSrc: "/lovable-uploads/c7aaa39e-7a48-48b4-838d-1f920df51cb3.png",
+    src: "/lovable-uploads/4810e530-231f-4c06-bb74-357a9d721554.png",
+    backSrc: "/lovable-uploads/1bf62e1a-9411-4b35-a447-ce11a038e7ce.png",
     alt: "SZN's Change God Remains Shirt",
     description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
     price: 60,
