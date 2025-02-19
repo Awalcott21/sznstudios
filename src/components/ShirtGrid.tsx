@@ -4,20 +4,6 @@ import ShirtModal from "./ShirtModal";
 
 const shirts = [
   {
-    src: "/lovable-uploads/4810e530-231f-4c06-bb74-357a9d721554.png",
-    backSrc: "/lovable-uploads/1bf62e1a-9411-4b35-a447-ce11a038e7ce.png",
-    alt: "SZN's Change God Remains Shirt",
-    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
-    price: 60,
-  },
-  {
-    src: "/lovable-uploads/3480baa9-9602-41f8-b45e-70a13fbd278a.png",
-    backSrc: "/lovable-uploads/a5b9ce1d-1e65-4d17-a5fb-9bb7f16b8a5d.png",
-    alt: "SZN's Change Camo Shirt",
-    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
-    price: 60,
-  },
-  {
     src: "/lovable-uploads/405216d7-eb18-4083-ba41-b00257b9e05f.png",
     alt: "God in Every SZN Shirt",
     description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
