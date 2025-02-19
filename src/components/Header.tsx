@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
@@ -15,10 +16,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    // Initial load
     updateCartItems();
-
-    // Listen for changes
     window.addEventListener('cartUpdated', updateCartItems);
     window.addEventListener('storage', updateCartItems);
 
@@ -37,7 +35,7 @@ const Header = () => {
         <div className="flex-1" />
         <div className="flex items-center justify-center flex-1">
           <img
-            src="/lovable-uploads/2cfaa4c7-485c-4c43-aa20-b5c97b5968e2.png"
+            src="/lovable-uploads/c858fe7c-7895-4277-8ef6-652362583d49.png"
             alt="SZN Studios Logo"
             className="h-12 w-auto"
           />
