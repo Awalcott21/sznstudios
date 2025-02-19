@@ -11,10 +11,10 @@ const shirts = [
     price: 60,
   },
   {
-    src: "/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png",
-    backSrc: "/lovable-uploads/64cec346-7ea0-4d58-94e2-418e857cc59f.png",
-    alt: "God's Glory Hoodie",
-    description: "Heavy-weight cotton blend hoodie with custom design. Features a relaxed fit with dropped shoulders and ribbed cuffs.",
+    src: "/lovable-uploads/3480baa9-9602-41f8-b45e-70a13fbd278a.png",
+    backSrc: "/lovable-uploads/a5b9ce1d-1e65-4d17-a5fb-9bb7f16b8a5d.png",
+    alt: "SZN's Change Camo Shirt",
+    description: "7.6 oz pigment-dyed 100% cotton, unisex heavyweight boxy tee. Oversized fit, crew neck, double-stitched. Gets softer with wear, 6% shrinkage.",
     price: 60,
   },
   {
