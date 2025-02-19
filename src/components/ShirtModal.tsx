@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -20,6 +21,7 @@ interface ShirtModalProps {
   onClose: () => void;
   shirt: {
     src: string;
+    backSrc?: string;
     alt: string;
     description: string;
   };
@@ -27,6 +29,7 @@ interface ShirtModalProps {
 
 const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [showingBack, setShowingBack] = useState(false);
   const { toast } = useToast();
 
   const handleAddToCart = () => {
@@ -66,11 +69,22 @@ const ShirtModal = ({ isOpen, onClose, shirt }: ShirtModalProps) => {
           <DialogTitle className="text-2xl font-bold">{shirt.alt}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4">
-          <img
-            src={shirt.src}
-            alt={shirt.alt}
-            className="w-full h-auto rounded-lg"
-          />
+          <div className="relative">
+            <img
+              src={showingBack && shirt.backSrc ? shirt.backSrc : shirt.src}
+              alt={`${shirt.alt} ${showingBack ? 'Back' : 'Front'}`}
+              className="w-full h-auto rounded-lg"
+            />
+            {shirt.backSrc && (
+              <Button
+                variant="secondary"
+                className="absolute bottom-2 right-2 bg-black/50 hover:bg-black/70 text-white"
+                onClick={() => setShowingBack(!showingBack)}
+              >
+                Show {showingBack ? 'Front' : 'Back'}
+              </Button>
+            )}
+          </div>
           <p className="text-sm text-gray-600">{shirt.description}</p>
           <div className="space-y-4">
             <div>
