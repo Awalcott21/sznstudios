@@ -3,13 +3,11 @@ import React from "react";
 import { useToast } from "@/hooks/use-toast";
 import BookCard from "./BookCard";
 
-const books = [
-  {
-    src: "/lovable-uploads/a536018a-ec04-46d1-a4d6-c1d3204c8576.png",
-    alt: "Book of Proverbs",
-    price: 50,
-  },
-];
+const books: {
+  src: string;
+  alt: string;
+  price: number;
+}[] = [];
 
 export type CartItem = {
   type: 'book' | 'shirt';
