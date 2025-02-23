@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,21 +19,6 @@
   50% {
     transform: translateY(-20px);
   }
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Product card hover effects */
-.product-card {
-  @apply transition-all duration-300 transform hover:scale-105;
-}
-
-/* Loading state animation */
-.loading-skeleton {
-  @apply animate-pulse bg-gray-200 rounded;
 }
 
 /* Pre-order banner styles */
@@ -60,33 +44,3 @@ html {
 .preorder-button {
   @apply text-sm text-foreground/80 hover:text-white transition-colors underline cursor-pointer;
 }
-
-/* Enhanced product presentation */
-.product-image-container {
-  @apply relative overflow-hidden rounded-lg;
-}
-
-.product-image-container img {
-  @apply transition-transform duration-300;
-}
-
-.product-image-container:hover img {
-  @apply scale-105;
-}
-
-/* Quick view overlay */
-.quick-view-overlay {
-  @apply absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 flex items-center justify-center;
-}
-
-.product-image-container:hover .quick-view-overlay {
-  @apply opacity-100;
-}
-
-/* Enhanced buttons */
-.gradient-button {
-  @apply bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 
-         text-white font-medium py-2 px-4 rounded-md transition-all duration-300 
-         transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50;
-}
-
