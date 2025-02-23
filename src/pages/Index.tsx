@@ -6,6 +6,7 @@ import ShirtGrid from "../components/ShirtGrid";
 import PreOrderModal from "../components/PreOrderModal";
 import Books from "../components/Books";
 import SignatureCollection from "../components/SignatureCollection";
+import ScriptureWall from "../components/ScriptureWall";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -27,6 +28,7 @@ const Index = () => {
       </div>
       <Books />
       <SignatureCollection />
+      <ScriptureWall />
       <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Reflection SZN</h2>
       <ShirtGrid />
       <PreOrderModal
