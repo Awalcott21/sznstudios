@@ -9,7 +9,30 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      scripture_wall: {
+        Row: {
+          created_at: string
+          id: string
+          shared_by: string
+          verse_reference: string
+          verse_text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          shared_by: string
+          verse_reference: string
+          verse_text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          shared_by?: string
+          verse_reference?: string
+          verse_text?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
