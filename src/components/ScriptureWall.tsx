@@ -3,9 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "./ui/button";
-import type { Database } from '@/integrations/supabase/types';
 
-type SharedVerse = Database['public']['Tables']['scripture_wall']['Row'];
+type SharedVerse = {
+  id: string;
+  verse_text: string;
+  verse_reference: string;
+  shared_by: string;
+  created_at: string;
+};
 
 const ScriptureWall = () => {
   const [verses, setVerses] = useState<SharedVerse[]>([]);
@@ -15,38 +20,15 @@ const ScriptureWall = () => {
 
   useEffect(() => {
     fetchVerses();
-
-    // Subscribe to real-time updates
-    const channel = supabase
-      .channel('scripture_wall_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'scripture_wall'
-        },
-        (payload) => {
-          console.log('New verse added:', payload);
-          setVerses(currentVerses => [payload.new as SharedVerse, ...currentVerses]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   const fetchVerses = async () => {
-    console.log('Fetching verses...');
     const { data, error } = await supabase
       .from('scripture_wall')
       .select('*')
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching verses:', error);
       toast({
         title: "Error",
         description: "Failed to load verses. Please try again later.",
@@ -55,7 +37,6 @@ const ScriptureWall = () => {
       return;
     }
 
-    console.log('Verses fetched:', data);
     setVerses(data || []);
   };
 
@@ -71,20 +52,17 @@ const ScriptureWall = () => {
     }
 
     setIsSubmitting(true);
-    console.log('Submitting verse:', newVerse);
-    
-    const { error } = await supabase
-      .from('scripture_wall')
-      .insert([{
+    const { error } = await supabase.from('scripture_wall').insert([
+      {
         verse_text: newVerse.text,
         verse_reference: newVerse.reference,
         shared_by: newVerse.name,
-      }]);
+      },
+    ]);
 
     setIsSubmitting(false);
 
     if (error) {
-      console.error('Error submitting verse:', error);
       toast({
         title: "Error",
         description: "Failed to share verse. Please try again.",
@@ -99,7 +77,6 @@ const ScriptureWall = () => {
     });
 
     setNewVerse({ text: '', reference: '', name: '' });
-    // Fetch verses again to ensure we have the latest data
     fetchVerses();
   };
 
@@ -108,7 +85,7 @@ const ScriptureWall = () => {
       <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Virtual Scripture Wall</h2>
         
-        <form onSubmit={handleSubmit} className="mb-12 bg-slate-800 p-6 rounded-lg shadow-xl">
+        <form onSubmit={handleSubmit} className="mb-12 bg-slate-800 p-6 rounded-lg">
           <div className="space-y-4">
             <div>
               <label htmlFor="verse-text" className="block text-sm font-medium text-foreground mb-1">
@@ -118,7 +95,7 @@ const ScriptureWall = () => {
                 id="verse-text"
                 value={newVerse.text}
                 onChange={(e) => setNewVerse({ ...newVerse, text: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground"
                 rows={3}
                 placeholder="Enter your favorite verse..."
               />
@@ -132,7 +109,7 @@ const ScriptureWall = () => {
                 type="text"
                 value={newVerse.reference}
                 onChange={(e) => setNewVerse({ ...newVerse, reference: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground"
                 placeholder="e.g., John 3:16"
               />
             </div>
@@ -145,14 +122,14 @@ const ScriptureWall = () => {
                 type="text"
                 value={newVerse.name}
                 onChange={(e) => setNewVerse({ ...newVerse, name: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-foreground"
                 placeholder="Enter your name"
               />
             </div>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full"
             >
               {isSubmitting ? 'Sharing...' : 'Share Verse'}
             </Button>
@@ -161,7 +138,7 @@ const ScriptureWall = () => {
 
         <div className="grid gap-6">
           {verses.map((verse) => (
-            <div key={verse.id} className="bg-slate-800 p-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-[1.02]">
+            <div key={verse.id} className="bg-slate-800 p-6 rounded-lg">
               <blockquote className="text-lg italic mb-2 text-foreground">"{verse.verse_text}"</blockquote>
               <div className="text-sm text-foreground/80">
                 <span className="font-medium">{verse.verse_reference}</span>
