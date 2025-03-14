@@ -30,7 +30,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mb-6 md:mb-8 font-light"
+          className="font-sans text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mb-6 md:mb-8 font-light"
         >
           Where style speaks volumes and faith runs deep
         </motion.p>
@@ -41,7 +41,7 @@ const HeroBanner = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <button 
-            className="bg-white text-black px-6 md:px-8 py-3 text-sm md:text-base font-medium hover:bg-gold-50 transition-colors duration-300"
+            className="font-sans bg-white text-black px-6 md:px-8 py-3 text-sm md:text-base font-medium hover:bg-gold-50 transition-colors duration-300"
           >
             Shop Collection
           </button>
