@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const HeroBanner = () => {
   return (
-    <div className="relative w-full h-screen max-h-[800px] overflow-hidden bg-black">
+    <div className="relative w-full min-h-[60vh] md:h-screen md:max-h-[800px] overflow-hidden bg-black">
       <div 
         className="absolute inset-0 opacity-70"
         style={{
@@ -21,16 +21,16 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="font-display text-display-lg md:text-[5rem] font-bold text-white mb-6 tracking-tight"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] font-bold text-white mb-4 md:mb-6 tracking-tight leading-tight"
         >
-          FAITH MEETS FASHION
+          SZN'S CHANGE; GOD REMAINS
         </motion.h1>
         
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-body-lg md:text-heading-sm text-white/90 max-w-2xl mb-8 font-light"
+          className="text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mb-6 md:mb-8 font-light"
         >
           Where style speaks volumes and faith runs deep
         </motion.p>
@@ -41,7 +41,7 @@ const HeroBanner = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <button 
-            className="bg-white text-black px-8 py-3 text-body-base font-medium hover:bg-gold-50 transition-colors duration-300"
+            className="bg-white text-black px-6 md:px-8 py-3 text-sm md:text-base font-medium hover:bg-gold-50 transition-colors duration-300"
           >
             Shop Collection
           </button>
