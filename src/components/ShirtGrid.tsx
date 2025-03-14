@@ -1,5 +1,9 @@
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { ShoppingCart, Expand } from "lucide-react";
+import { Button } from "./ui/button";
+import { useToast } from "@/hooks/use-toast";
 import ShirtModal from "./ShirtModal";
 
 const shirts = [
@@ -60,28 +64,72 @@ const shirts = [
 ];
 
 const ShirtGrid = () => {
-  const [selectedShirt, setSelectedShirt] = useState<(typeof shirts)[0] | null>(
-    null
-  );
+  const [selectedShirt, setSelectedShirt] = useState<(typeof shirts)[0] | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { toast } = useToast();
+
+  const handleQuickAdd = (shirt: typeof shirts[0], e: React.MouseEvent) => {
+    e.stopPropagation();
+    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    cartItems.push({
+      type: 'shirt',
+      item: {
+        ...shirt,
+        size: 'L' // Default size for quick add
+      },
+      quantity: 1
+    });
+    
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    window.dispatchEvent(new Event('cartUpdated'));
+    
+    toast({
+      title: "Added to cart",
+      description: `${shirt.alt} has been added to your cart.`,
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {shirts.map((shirt, index) => (
-          <div
+          <motion.div
             key={index}
-            className="relative group cursor-pointer w-full aspect-square flex items-center justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="relative group cursor-pointer"
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
             onClick={() => index < 6 && setSelectedShirt(shirt)}
-            style={{
-              animationDelay: `${index * 0.2}s`,
-            }}
           >
-            <div className={`animate-float transform transition-all duration-300 group-hover:scale-105 w-full max-w-[250px] relative ${index >= 6 ? 'blur-[2px]' : ''}`}>
+            <div className={`relative w-full aspect-square flex items-center justify-center overflow-hidden rounded-lg ${index >= 6 ? 'blur-[2px]' : ''}`}>
               <img
                 src={shirt.src}
                 alt={shirt.alt}
-                className="w-full h-full object-contain transition-all duration-300 rounded-lg shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
+              
+              {hoveredIndex === index && index < 6 && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="rounded-full bg-white text-black hover:bg-white/90"
+                    onClick={(e) => handleQuickAdd(shirt, e)}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="rounded-full bg-white text-black hover:bg-white/90"
+                  >
+                    <Expand className="h-5 w-5" />
+                  </Button>
+                </div>
+              )}
+
               {index >= 6 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                   <span className="text-white text-2xl font-bold px-6 py-3 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 shadow-xl">
@@ -90,7 +138,11 @@ const ShirtGrid = () => {
                 </div>
               )}
             </div>
-          </div>
+            <div className="mt-4 text-center">
+              <h3 className="font-medium text-lg">{shirt.alt}</h3>
+              <p className="text-muted-foreground">$60.00</p>
+            </div>
+          </motion.div>
         ))}
       </div>
       {selectedShirt && (
