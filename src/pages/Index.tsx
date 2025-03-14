@@ -8,7 +8,6 @@ import PreOrderModal from "../components/PreOrderModal";
 import Books from "../components/Books";
 import SignatureCollection from "../components/SignatureCollection";
 import Footer from "../components/Footer";
-import QuickNav from "../components/QuickNav";
 
 const Index = () => {
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
@@ -37,8 +36,6 @@ const Index = () => {
           <h2 className="text-3xl font-bold text-center mb-12">Reflection SZN</h2>
           <ShirtGrid />
         </div>
-        
-        <QuickNav />
         
         <PreOrderModal
           isOpen={isPreOrderModalOpen}
