@@ -32,8 +32,8 @@ const Header = () => {
 
   return (
     <header className="fixed w-full z-50 top-0 bg-background border-b">
-      <div className="container mx-auto px-4 py-3 md:py-4">
-        <div className="flex items-center justify-between gap-2 md:gap-4">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-4">
           <Button 
             variant="ghost" 
             size="icon"
@@ -44,27 +44,21 @@ const Header = () => {
           </Button>
 
           <div className="flex-1 flex items-center justify-start">
-            <div className="flex flex-col items-center md:items-start">
-              <img
-                src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
-                alt="SZN Studios Logo"
-                className="h-12 md:h-16 w-auto"
-              />
-              <span className="text-xs md:text-sm font-medium text-foreground/80 mt-1 hidden md:block">
-                SZN'S Change; GOD Remains
-              </span>
-            </div>
+            <img
+              src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
+              alt="SZN Studios Logo"
+              className="h-16 w-auto"
+            />
           </div>
 
           <div className="hidden lg:flex flex-1 items-center justify-center">
             <MainNav />
           </div>
 
-          <div className="flex-1 flex items-center justify-end gap-1 md:gap-2">
+          <div className="flex-1 flex items-center justify-end gap-2">
             <Button 
               variant="ghost" 
               size="icon"
-              className="hidden md:inline-flex"
             >
               <User className="h-5 w-5" />
             </Button>
@@ -84,11 +78,6 @@ const Header = () => {
             </Button>
           </div>
         </div>
-      </div>
-
-      {/* Mobile tagline */}
-      <div className="lg:hidden text-center py-1 text-xs font-medium text-foreground/80 border-t">
-        SZN'S Change; GOD Remains
       </div>
 
       <MobileMenu 

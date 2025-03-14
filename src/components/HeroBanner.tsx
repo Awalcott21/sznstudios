@@ -23,7 +23,7 @@ const HeroBanner = () => {
           transition={{ duration: 0.6 }}
           className="font-display text-display-lg md:text-[5rem] font-bold text-white mb-6 tracking-tight"
         >
-          SZN'S Change; GOD Remains
+          FAITH MEETS FASHION
         </motion.h1>
         
         <motion.p
