@@ -1,12 +1,15 @@
 
 import React, { useState, useEffect } from "react";
-import { ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
 import CustomerDetailsModal from "./CustomerDetailsModal";
+import MainNav from "./NavigationMenu";
+import MobileMenu from "./MobileMenu";
 import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const { toast } = useToast();
 
@@ -30,32 +33,59 @@ const Header = () => {
   const total = cartItems.reduce((sum: number, item: any) => sum + item.item.price * item.quantity, 0);
 
   return (
-    <header className="fixed w-full z-50 top-0 bg-background">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="flex-1" />
-        <div className="flex items-center justify-center flex-1">
-          <img
-            src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
-            alt="SZN Studios Logo"
-            className="h-20 w-auto" // Increased from h-12 to h-20
-          />
-        </div>
-        <div className="flex-1 flex justify-end">
+    <header className="fixed w-full z-50 top-0 bg-background border-b">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-4">
           <Button 
-            variant="outline" 
-            size="icon" 
-            className="relative"
-            onClick={() => setShowCart(true)}
+            variant="ghost" 
+            size="icon"
+            className="lg:hidden"
+            onClick={() => setShowMobileMenu(true)}
           >
-            <ShoppingCart className="h-5 w-5" />
-            {itemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                {itemCount}
-              </span>
-            )}
+            <Menu className="h-5 w-5" />
           </Button>
+
+          <div className="flex-1 flex items-center justify-start">
+            <img
+              src="/lovable-uploads/5abab4cf-67d5-4ded-83b1-6324aacd243d.png"
+              alt="SZN Studios Logo"
+              className="h-16 w-auto"
+            />
+          </div>
+
+          <div className="hidden lg:flex flex-1 items-center justify-center">
+            <MainNav />
+          </div>
+
+          <div className="flex-1 flex items-center justify-end gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon"
+            >
+              <User className="h-5 w-5" />
+            </Button>
+            
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+              onClick={() => setShowCart(true)}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {itemCount}
+                </span>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
+
+      <MobileMenu 
+        isOpen={showMobileMenu}
+        onClose={() => setShowMobileMenu(false)}
+      />
 
       <CustomerDetailsModal
         isOpen={showCart}
