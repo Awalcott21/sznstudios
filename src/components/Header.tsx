@@ -2,16 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { Menu, ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
-import CustomerDetailsModal from "./CustomerDetailsModal";
+import CartDrawer from "./cart/CartDrawer";
 import MainNav from "./NavigationMenu";
 import MobileMenu from "./MobileMenu";
-import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const { toast } = useToast();
 
   const updateCartItems = () => {
     const items = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -87,9 +85,9 @@ const Header = () => {
         onClose={() => setShowMobileMenu(false)}
       />
 
-      <CustomerDetailsModal
+      <CartDrawer
         isOpen={showCart}
-        onClose={() => setShowCart(false)}
+        onOpenChange={setShowCart}
         cartItems={cartItems}
         total={total}
       />

@@ -94,17 +94,24 @@ const PayPalCheckout = ({ cartItems, total, onSuccess }: PayPalCheckoutProps) =>
   };
 
   return (
-    <PayPalButtons 
-      createOrder={createOrder}
-      onApprove={onApprove}
-      onError={onError}
-      style={{ 
-        layout: "vertical",
-        shape: "rect",
-        label: "checkout"
-      }}
-      forceReRender={[total, JSON.stringify(cartItems)]}
-    />
+    <div className="space-y-4">
+      <div className="text-sm text-center text-muted-foreground">
+        <p>Secure checkout powered by PayPal</p>
+        <p className="mt-1">All major credit cards accepted</p>
+      </div>
+      
+      <PayPalButtons 
+        createOrder={createOrder}
+        onApprove={onApprove}
+        onError={onError}
+        style={{ 
+          layout: "vertical",
+          shape: "rect",
+          label: "checkout"
+        }}
+        forceReRender={[total, JSON.stringify(cartItems)]}
+      />
+    </div>
   );
 };
 
