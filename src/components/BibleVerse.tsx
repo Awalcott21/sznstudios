@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 
 const verses = [
@@ -23,12 +24,14 @@ const BibleVerse = () => {
   }, []);
 
   return (
-    <div className="w-full py-8 px-4">
+    <div className="w-full py-12 px-4">
       <div className="container mx-auto text-center">
-        <p className="text-foreground text-xl md:text-2xl font-light italic transition-opacity duration-500">
+        <p className="font-display text-heading-md md:text-heading-lg text-foreground italic transition-opacity duration-500 max-w-4xl mx-auto">
           {verses[currentVerseIndex]}
         </p>
-        <p className="text-foreground mt-2 text-sm">Ecclesiastes 3:1-8</p>
+        <p className="text-body-sm text-foreground/60 mt-4 font-medium uppercase tracking-wide">
+          Ecclesiastes 3:1-8
+        </p>
       </div>
     </div>
   );

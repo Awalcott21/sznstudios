@@ -21,7 +21,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+          className="font-display text-display-lg md:text-[5rem] font-bold text-white mb-6 tracking-tight"
         >
           FAITH MEETS FASHION
         </motion.h1>
@@ -30,7 +30,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-white/90 max-w-2xl mb-8"
+          className="text-body-lg md:text-heading-sm text-white/90 max-w-2xl mb-8 font-light"
         >
           Where style speaks volumes and faith runs deep
         </motion.p>
@@ -41,7 +41,7 @@ const HeroBanner = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <button 
-            className="bg-white text-black px-8 py-3 text-lg font-medium hover:bg-gold-50 transition-colors duration-300"
+            className="bg-white text-black px-8 py-3 text-body-base font-medium hover:bg-gold-50 transition-colors duration-300"
           >
             Shop Collection
           </button>

@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -41,6 +40,21 @@ export default {
           DEFAULT: "#F4F4F5",
           foreground: "#71717A",
         },
+      },
+      fontFamily: {
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+      },
+      fontSize: {
+        'display-lg': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'display-md': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
+        'display-sm': ['2.25rem', { lineHeight: '1.3' }],
+        'heading-lg': ['2rem', { lineHeight: '1.3', letterSpacing: '0.01em', fontWeight: '700' }],
+        'heading-md': ['1.5rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'heading-sm': ['1.25rem', { lineHeight: '1.5', fontWeight: '600' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.7' }],
+        'body-base': ['1rem', { lineHeight: '1.75' }],
+        'body-sm': ['0.875rem', { lineHeight: '1.6' }],
       },
       keyframes: {
         float: {
