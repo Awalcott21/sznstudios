@@ -1,6 +1,8 @@
 
 import React, { useState } from "react";
 import Header from "../components/Header";
+import HeroBanner from "../components/HeroBanner";
+import FeaturedCollections from "../components/FeaturedCollections";
 import BibleVerse from "../components/BibleVerse";
 import ShirtGrid from "../components/ShirtGrid";
 import PreOrderModal from "../components/PreOrderModal";
@@ -12,28 +14,35 @@ const Index = () => {
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="mt-24">
-        <BibleVerse />
-      </div>
-      <div className="w-full py-3 text-center">
-        <button
-          onClick={() => setIsPreOrderModalOpen(true)}
-          className="px-4 py-2 text-sm font-medium text-foreground/90 hover:text-white transition-all border border-slate-700 hover:border-slate-600 rounded-md bg-gradient-to-r from-slate-800 to-slate-800 hover:from-slate-700 hover:to-slate-700"
-        >
-          Pre-Orders Now Open →
-        </button>
-      </div>
-      <Books />
-      <SignatureCollection />
-      <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Reflection SZN</h2>
-      <ShirtGrid />
-      <PreOrderModal
-        isOpen={isPreOrderModalOpen}
-        onClose={() => setIsPreOrderModalOpen(false)}
-      />
-      <div className="flex-grow" />
+      <main className="pt-20">
+        <HeroBanner />
+        
+        <div className="py-16 bg-muted">
+          <BibleVerse />
+        </div>
+
+        <FeaturedCollections />
+        
+        <div className="container mx-auto px-4 py-16">
+          <Books />
+        </div>
+        
+        <div className="bg-muted py-16">
+          <SignatureCollection />
+        </div>
+        
+        <div className="container mx-auto px-4 py-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Reflection SZN</h2>
+          <ShirtGrid />
+        </div>
+        
+        <PreOrderModal
+          isOpen={isPreOrderModalOpen}
+          onClose={() => setIsPreOrderModalOpen(false)}
+        />
+      </main>
       <Footer />
     </div>
   );

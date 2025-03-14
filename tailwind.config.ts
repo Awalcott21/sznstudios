@@ -23,11 +23,23 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#F8F9FA",
-        foreground: "#8E9196",
-        slate: {
-          DEFAULT: "#F8F9FA",
-          foreground: "#8E9196",
+        background: "#FFFFFF",
+        foreground: "#222222",
+        gold: {
+          50: "#FDF9E7",
+          100: "#FCF5CF",
+          200: "#F9E69F",
+          300: "#F6D76F",
+          400: "#F3C83F",
+          500: "#F0B90F",
+          600: "#C0940C",
+          700: "#906F09",
+          800: "#604A06",
+          900: "#302503",
+        },
+        muted: {
+          DEFAULT: "#F4F4F5",
+          foreground: "#71717A",
         },
       },
       keyframes: {
@@ -35,18 +47,16 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
         },
+        fadeIn: {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         float: "float 6s ease-in-out infinite",
-      },
-      rotate: {
-        'y-12': '12deg',
-      },
-      perspective: {
-        '1000': '1000px',
+        fadeIn: "fadeIn 0.5s ease-out forwards",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-
