@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const HeroBanner = () => {
   return (
-    <div className="relative w-full min-h-[60vh] md:h-screen md:max-h-[800px] overflow-hidden bg-black">
+    <div className="relative w-full min-h-[90vh] md:h-screen md:max-h-[800px] overflow-hidden bg-black">
       <div 
         className="absolute inset-0 opacity-70"
         style={{
@@ -16,12 +16,12 @@ const HeroBanner = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent" />
       
-      <div className="relative container mx-auto h-full flex flex-col justify-center items-center text-center px-4">
+      <div className="relative container mx-auto h-full flex flex-col justify-center items-center text-center px-4 py-12 md:py-0">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] font-bold text-white mb-4 md:mb-6 tracking-tight leading-tight"
+          className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-[5rem] font-bold text-white mb-4 md:mb-6 tracking-tight leading-tight"
         >
           SZN'S CHANGE; GOD REMAINS
         </motion.h1>
@@ -30,7 +30,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-sans text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mb-6 md:mb-8 font-light"
+          className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mb-6 md:mb-8 font-light px-4"
         >
           Where style speaks volumes and faith runs deep
         </motion.p>
